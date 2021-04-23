@@ -25,18 +25,24 @@ public class Q1Reducer extends Reducer<Text,Text,Text,Text>{
 		
 		// add the readable key and the average value to the map 
 		addToMap(key, avg);
-		
-		
-		
+	}
+	
+	protected void cleanup(Context context) {
+		// answering the question
 		// outputing the answer (MAY NEED TO MOVE TO A SEPERATE METHOD TO MAKE COMPARISON CORRECT!!)
 		
-		context.write(new Text("Question 1:"), new Text());
-		Entry<Integer, String> best = bestTravelTimes.firstEntry();
-		context.write(new Text("The best time to fly is "), new Text(best.getValue()));
-		context.write(new Text("Question 2:"), new Text());
-		Entry<Integer, String> worst = bestTravelTimes.lastEntry();
-		context.write(new Text("The worst time to fly is "), new Text(worst.getValue()));
-		
+		try {
+			context.write(new Text("Question 1:"), new Text());
+			Entry<Integer, String> best = bestTravelTimes.firstEntry();
+			context.write(new Text("The best time to fly is "), new Text(best.getValue()));
+			context.write(new Text("Question 2:"), new Text());
+			Entry<Integer, String> worst = bestTravelTimes.lastEntry();
+			context.write(new Text("The worst time to fly is "), new Text(worst.getValue()));
+			} catch (IOException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
 	}
 	
 	// Method to calculate the average delay at a given time on a day of the month 
@@ -124,4 +130,6 @@ public class Q1Reducer extends Reducer<Text,Text,Text,Text>{
 		public String findTime(String s) {
 			return s.substring(0,2) + ":" + s.substring(2);
 		}
+		
+		
 }
